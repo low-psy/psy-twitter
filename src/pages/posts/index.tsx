@@ -1,3 +1,3 @@
-export default function PostsPage() {
+export default function PostListPage() {
   return <h1>Posts</h1>;
 }
