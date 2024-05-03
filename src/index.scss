@@ -1,13 +1,264 @@
+$background: white;
+$activeBg: rgb(228, 228, 228);
+$black: rgb(49, 49, 49);
+$border: #dcdcdcb1;
+$primaryColor: rgb(97, 166, 250);
+$grayText: #9ca3af;
+$activeBorder: #3b82f6;
+$danger: rgb(250, 97, 97);
+$dangerDark: rgb(229, 75, 75);
+$gray: #6b7280;
+$grayDark: #4b505a;
+
+$font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+// 전체 레이아웃
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: $font;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  background-color: $background;
+  color: $black;
+  box-sizing: border-box;
+}
+
+.layout {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  border-left: 1px solid $border;
+  border-right: 1px solid $border;
+  min-height: 100vh;
+}
+
+// util
+
+.btn {
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+// footer 레이아웃
+.footer {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: transparent;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background-color: transparent;
+
+    button {
+      border: none;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      padding: 15px 0;
+      cursor: pointer;
+      background-color: transparent;
+      backdrop-filter: blur(10px);
+      outline: none;
+      position: relative;
+
+      svg {
+        background-color: transparent;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+// home 레아아웃
+.home {
+  &__title {
+    padding: 16px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  &__tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat((2, minmax(0, 1fr)));
+  }
+
+  &__tab {
+    text-align: center;
+    font-weight: 500;
+    padding: 16px;
+    cursor: pointer;
+
+    &--active {
+      font-weight: 700;
+      border-bottom: 2px solid $activeBorder;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $activeBg;
+      transition: background-color 0.2s ease-in-out;
+    }
+  }
+}
+
+.post-form {
+  &__textarea {
+    font-family: inherit;
+    min-height: 120px;
+    width: 100%;
+    border: none;
+    resize: none;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    outline: none;
+    font-size: 20px;
+    padding: 8px;
+
+    &::placeholder {
+      font-family: $font;
+      color: $grayText;
+      font-size: 20px;
+    }
+  }
+
+  &__submit-area {
+    display: flex;
+    padding: 0.75rem 1rem;
+    justify-content: space-between;
+    border-bottom: 1px solid $border;
+  }
+
+  &__file {
+    display: flex;
+    padding: 0 1rem;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  &__submit-btn {
+    @extend .btn;
+    padding: 0.75rem 1.25rem;
+    background-color: $primaryColor;
+    color: white;
+    border: none;
+    font-size: 16px;
+    &:hover {
+      background-color: $activeBorder;
+    }
+  }
+}
+
+//Post 레아아웃
+.post {
+  padding-bottom: 40px;
+
+  &__box {
+    padding: 10px 0px;
+    border-bottom: 1px solid $border;
+  }
+
+  &__profile {
+    text-decoration: none;
+    padding: 0px 10px;
+
+    &-img,
+    &-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    &-icon {
+      background: rgba(238, 238, 238, 0.671);
+      padding: 8px;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  &__email,
+  &__createdAt {
+    font-size: 12px;
+    color: $grayText;
+  }
+
+  &__content {
+    display: block;
+    font-weight: 400;
+    padding: 16px 4px;
+  }
+
+  &__footer {
+    padding: 0 16px;
+    margin-top: 10px;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    flex-direction: row-reverse;
+
+    button {
+      @extend .btn;
+      border: none;
+
+      &.post__delete {
+        color: white;
+        background-color: $danger;
+        &:hover,
+        &:focus {
+          background-color: $dangerDark;
+        }
+      }
+
+      &.post__edit {
+        background-color: $gray;
+        a {
+          background-color: transparent;
+          color: white;
+        }
+        &:hover,
+        &:focus {
+          background-color: $grayDark;
+        }
+      }
+      &.post__likes,
+      &.post__comments {
+        color: $gray;
+        @extend .post__flex;
+        &:hover,
+        &:focus {
+          color: black;
+        }
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
 }
