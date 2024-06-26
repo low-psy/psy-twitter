@@ -1,0 +1,68 @@
+$border: #dcdcdcb1;
+$gray: #6b7280;
+$grayDark: #4b505a;
+$danger: rgb(250, 97, 97);
+$dangerDark: rgb(229, 75, 75);
+
+.comment {
+  padding-bottom: 16px;
+  &__borderBox {
+    border-bottom: 1px solid $border;
+    padding: 16px 0;
+  }
+  &__imgBox {
+    padding: 16px 0;
+  }
+  &__flexBox {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 16px;
+    gap: 8px;
+    align-items: center;
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  &__email {
+    font-size: 14px;
+    line-height: 1;
+  }
+  &__createdAt {
+    font-size: 14px;
+    color: $grayDark;
+    line-height: 1;
+  }
+  &__content {
+    padding: 8px 20px;
+  }
+  &__submitDiv {
+    padding: 0 16px;
+    margin-top: 8px;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    flex-direction: row-reverse;
+    button {
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      background-color: $danger;
+      color: white;
+      border: none;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+      &:hover,
+      &:focus {
+        background-color: $dangerDark;
+      }
+    }
+  }
+}

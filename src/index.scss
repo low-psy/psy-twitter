@@ -1,20 +1,8 @@
-$background: white;
-$activeBg: rgb(228, 228, 228);
-$black: rgb(49, 49, 49);
-$border: #dcdcdcb1;
-$primaryColor: rgb(97, 166, 250);
-$grayText: #9ca3af;
-$activeBorder: #3b82f6;
-$danger: rgb(250, 97, 97);
-$dangerDark: rgb(229, 75, 75);
-$gray: #6b7280;
-$grayDark: #4b505a;
-
-$font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+@import './utils.scss';
 
 // 전체 레이아웃
-body {
+body,
+h1 {
   margin: 0;
   font-family: $font;
 }
@@ -37,6 +25,7 @@ body {
 // util
 
 .btn {
+  border: none;
   padding: 0.2rem 0.8rem;
   border-radius: 999px;
   font-size: 12px;
@@ -44,6 +33,40 @@ body {
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.transparent {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.sticky {
+  width: 100%;
+  position: sticky;
+  max-width: 680px;
+  margin: 0 auto;
+  top: 0;
+}
+
+// hashTag
+.hashtag__box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.hashtag__content {
+  font-size: 14px;
+  border: 1px solid $primaryColor;
+  color: $primaryColor;
+  border-radius: 10px;
+  padding: 2px 8px;
 }
 
 // footer 레이아웃
@@ -60,8 +83,12 @@ body {
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     background-color: transparent;
+
+    &--text {
+      background-color: transparent;
+    }
 
     button {
       border: none;
@@ -85,8 +112,54 @@ body {
   }
 }
 
+@include xs {
+  .footer {
+    display: none;
+  }
+  .layout {
+    border: none;
+  }
+}
+
+@include mobile {
+  .footer {
+    &__grid {
+      &--text {
+        display: none;
+      }
+    }
+    button {
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+  .layout {
+    border: none;
+  }
+}
+
+@include tablet {
+  .footer {
+    &__grid {
+      &--text {
+        display: none;
+      }
+    }
+    button {
+      svg {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
 // home 레아아웃
 .home {
+  &__top {
+    @extend .transparent;
+    @extend .sticky;
+  }
   &__title {
     padding: 16px;
     font-weight: 700;
@@ -94,12 +167,14 @@ body {
   }
 
   &__tabs {
+    @extend .transparent;
     width: 100%;
     display: grid;
     grid-template-columns: repeat((2, minmax(0, 1fr)));
   }
 
   &__tab {
+    @extend .transparent;
     text-align: center;
     font-weight: 500;
     padding: 16px;
@@ -116,9 +191,64 @@ body {
       transition: background-color 0.2s ease-in-out;
     }
   }
-}
+  &__search-div {
+    display: flex;
+    justify-content: center;
+  }
+  &__search {
+    @extend .post-form__input;
+    background-color: $backgroundLight;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 600;
 
+    &:focus {
+      background-color: $activeBg;
+    }
+  }
+}
 .post-form {
+  &__profile {
+    padding: 16px;
+    .post-form__input {
+      border-bottom: 1px solid $gray;
+      padding: 8px 4px;
+      font-size: 16px;
+      width: 80%;
+      &:active,
+      &:focus {
+        border-bottom: 1px solid $primaryColor;
+      }
+    }
+  }
+  &__input {
+    font-family: $font;
+    padding: 12px;
+    border: none;
+    resize: none;
+    outline: none;
+    width: 90%;
+  }
+
+  &__hashtags {
+    padding: 16px;
+    border-bottom: 1px solid $border;
+    &-outputs {
+      @extend .hashtag__box;
+    }
+    &-tag {
+      @extend .hashtag__content;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        color: $activeBorder;
+        border: 1px solid $activeBorder;
+      }
+    }
+  }
+
   &__textarea {
     font-family: inherit;
     min-height: 120px;
@@ -128,8 +258,9 @@ body {
     border-top: 1px solid $border;
     border-bottom: 1px solid $border;
     outline: none;
-    font-size: 20px;
-    padding: 8px;
+    font-size: 18px;
+    padding: 14px;
+    color: $grayDark;
 
     &::placeholder {
       font-family: $font;
@@ -140,9 +271,34 @@ body {
 
   &__submit-area {
     display: flex;
+    align-items: center;
     padding: 0.75rem 1rem;
     justify-content: space-between;
     border-bottom: 1px solid $border;
+  }
+
+  &__image-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__attachment {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+  }
+
+  &__clear-btn {
+    @extend .btn;
+    padding: 0.2rem 0.8rem;
+    border: none;
+    color: white;
+    background-color: rgba(255, 59, 92, 0.734);
+    &:hover,
+    &:focus {
+      background-color: $dangerDark;
+    }
   }
 
   &__file {
@@ -163,7 +319,7 @@ body {
     background-color: $primaryColor;
     color: white;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
     &:hover {
       background-color: $activeBorder;
     }
@@ -173,6 +329,22 @@ body {
 //Post 레아아웃
 .post {
   padding-bottom: 40px;
+
+  &__image-div {
+    padding: 16px;
+  }
+
+  &__header {
+    button {
+      border: none;
+      padding: 16px;
+    }
+    &-btn {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
 
   &__box {
     padding: 10px 0px;
@@ -200,6 +372,36 @@ body {
     display: flex;
     gap: 4px;
     align-items: center;
+
+    &--between {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__follow-btn {
+    @extend .btn;
+    background-color: black;
+    color: white;
+    transition: background-color 0.1s ease-in-out;
+    &:hover,
+    &:active {
+      background-color: rgb(44, 44, 44);
+      color: white;
+    }
+  }
+
+  &__following-btn {
+    @extend .btn;
+    background-color: white;
+    color: $primaryColor;
+
+    &:hover,
+    &:active {
+      background-color: $backgroundLight;
+      color: $activeBorder;
+    }
   }
 
   &__email,
@@ -260,5 +462,183 @@ body {
 
   a {
     text-decoration: none;
+  }
+
+  &__no-posts {
+    padding: 16px;
+
+    .post__text {
+      font-size: 14px;
+      border: 1px solid $gray;
+      padding: 16px;
+      border-radius: 4px;
+    }
+  }
+}
+
+// form 레이아웃
+.form {
+  margin: 0 auto;
+  max-width: 680px;
+  padding: 20px;
+
+  &__title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    padding-top: 20px;
+  }
+
+  input {
+    height: 36px;
+    padding: 10px;
+    border-radius: 0.3rem;
+    border: 1px solid lightgray;
+    width: 96%;
+    max-width: 680px;
+    font-size: 16px;
+  }
+
+  &__block {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  &__block--lg {
+    margin-top: 28px;
+    width: 100%;
+  }
+
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+
+  &__btn--submit {
+    @extend .btn;
+    width: 100%;
+    height: 48px;
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 auto;
+    background-color: $primaryColor;
+    font-size: 18px;
+    border: none;
+    color: white;
+
+    &:hover,
+    &:focus {
+      background-color: $activeBorder;
+    }
+  }
+
+  &__link {
+    margin-left: 10px;
+    text-decoration: none;
+    color: $grayText;
+    &:hover,
+    &:focus {
+      color: $gray;
+    }
+  }
+
+  &__error {
+    color: $danger;
+  }
+
+  &__btn--google,
+  &__btn--github {
+    @extend .form__btn--submit;
+    background-color: rgb(226, 226, 226);
+    color: rgb(95, 95, 95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+
+    &:hover,
+    &:focus {
+      background-color: rgb(195, 195, 195);
+    }
+  }
+}
+
+// logo
+.logo__box {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+
+  &--lg {
+    width: 48px;
+    height: 48px;
+  }
+
+  img,
+  svg {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    vertical-align: top;
+  }
+}
+
+// profile
+.profile {
+  display: flex;
+  padding: 0 1rem;
+  margin-top: 2.5rem;
+  justify-content: space-between;
+  align-items: center;
+
+  &__flex {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+
+  &__btn {
+    @extend .btn;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    color: white;
+    background-color: $primaryColor;
+    &:hover,
+    &:active {
+      background-color: $activeBorder;
+    }
+    &--language {
+      background-color: $gray;
+    }
+  }
+
+  &__text {
+    padding: 0 1rem;
+    margin-top: 20px;
+  }
+
+  &__name {
+    font-size: 16px;
+    color: $grayDark;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  &__email {
+    font-size: 14px;
+    color: $grayText;
+    font-weight: 700;
+    margin-top: 4px;
   }
 }

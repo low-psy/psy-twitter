@@ -16,15 +16,19 @@
     "react-icons": "^5.2.0",
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.5",
+    "recoil": "^0.7.7",
     "sass": "^1.76.0",
     "typescript": "^4.4.2",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate:types": "typed-css-modules src/**/*.module.scss --outDir src"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +49,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^9.0.8",
+    "typed-css-modules": "^0.9.1"
   }
 }
